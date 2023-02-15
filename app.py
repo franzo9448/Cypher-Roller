@@ -185,6 +185,7 @@ def roll_dice(num_sides):
         dice_menu()
 
 def dice_menu():
+    print_logo()
     dice_dict = {
         1: 4,
         2: 6,
@@ -204,8 +205,7 @@ def dice_menu():
         if choice == 8:
             main_menu()
         elif choice in dice_dict:
-            result = roll_dice(dice_dict[choice])
-            print(f"You rolled a d{dice_dict[choice]} and got {result}")
+            roll_dice(dice_dict[choice])
         else:
             print("Invalid choice. Please try again.")
 
