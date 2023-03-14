@@ -91,6 +91,8 @@ def main_menu():
         ("Create random major artifact", random_major),
         ("Fantasy names", names_menu),
         ("Dice roller", dice_menu),
+        ("Bad Omens Generator", bad_omens),
+        ("Random Encounters",encounters),
         ("Exit", neo_exit)
     ]
     menu_text = "\n".join(f"{i} -- {name}" for i, (name, _) in enumerate(menu_items, start=1))
@@ -173,7 +175,6 @@ def print_menu_options(options):
         print(f"{i+1} -- {option[0]}")
     print(f"{len(options)+1} -- Return to main menu")
 
-
 def roll_dice(num_sides):
     result = random.randint(1, num_sides)
     print(f"You rolled a d{num_sides} and got {result}")
@@ -185,7 +186,6 @@ def roll_dice(num_sides):
         dice_menu()
 
 def dice_menu():
-    print_logo()
     dice_dict = {
         1: 4,
         2: 6,
@@ -205,12 +205,54 @@ def dice_menu():
         if choice == 8:
             main_menu()
         elif choice in dice_dict:
-            roll_dice(dice_dict[choice])
+            result = roll_dice(dice_dict[choice])
+            print(f"You rolled a d{dice_dict[choice]} and got {result}")
         else:
             print("Invalid choice. Please try again.")
 
+def bad_omens():
+    print_logo()
+    bad_dict = {
+        1: "A PC makes eye contact with a mysterious beggar, who gasps and runs away. If followed, they disappear.",
+        2: "A raven caws angrily at the party before flying away. More are seen periodically, perching and watching.",
+        3: "A woman in the street drops an urn, which shatters. There's a moment of silence in the street.",
+        4: "A baby won't stop crying in a nearby basket. If the players investigate, there is no child. The crying is coming from the basket itself.",
+        5: "The campfire goes out in the middle of the night. There is no wind. It is difficult to restart as darkness seems to loom around the players.",
+        6: "The flames of nearby candles flicker out completely, but a moment later they return.",
+        7: "The moon is larger and brighter than usual. It seems to dominate the sky, and cast harsh, pale shadows.",
+        8: "A wooden road sign is snapped in half at a crossroads. It lies broken in the dirt.",
+        9: "The clouds are gray and full of rain. And yet it does not rain. Though thunder rumbles, not a drop lands.",
+        10: "A PC wakes up in the morning with a cut across their palm that wasn't there before.",
+        11: "Animals go wild. Horses buck and have wide, scared eyes. Dogs bark fiercely and pull at their leashes.",
+        12: "There's a large crack in a PC's drinking glass, and yet it doesn't break unless forced.",
+        13: "A bird flies into the wall of a building and drops dead outside the door.",
+        14: "A PC is contacted by the Sending spell, but they only hear heavy breathing and crying.",
+        15: "The players hear distant, sourceless harp music. When pointed out or mentioned, it stops.",
+        16: "An old man has a heart attack in the street. He stares directly at one of the PCs as he dies.",
+        17: "A passed out drunk wakes suddenly and screams, clawing at his eyes. He runs and disappears.",
+        18: "A strong wind that was blowing all day suddenly stops. The world is still for a few moments before life continues.",
+        19: "A child chases an errant ball, only to trip and twist their ankle. The ball is not found.",
+        20: "The temple doors are tossed open by a violent wind until a concerned acolyte rushes to close them.",
+    }
+    result = random.randint(1, 20)
+    print(f"{result}. {bad_dict[result]}")
+    main_exit()
 
 
+def encounters():
+    print_logo()
+    # Genera un numero casuale tra 1 e 66 inclusi
+    num = random.randint(1, 545)
+
+    # Apre il file txt in modalità lettura
+    with open('encounter.txt', 'r') as f:
+        # Itera sulle righe del file
+        lines = f.readlines()
+        for line in lines:
+            if str(num) in line:
+                print(line.strip())
+                break
+    main_exit()
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.ERROR)
